@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "nuclear-sentinel",
-    "slug": "nuclear-sentinel",
+    "slug": "nuclear-sentinel-cross-plataform",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

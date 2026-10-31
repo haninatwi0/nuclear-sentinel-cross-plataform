@@ -1,14 +1,9 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { NivelAlerta } from "../types";
+import { colors } from "../theme";
 
-type Props = {
-  level: NivelAlerta;
-};
+type Props = { level: NivelAlerta };
 
 const labels: Record<NivelAlerta, string> = {
   normal: "NORMAL",
@@ -16,47 +11,32 @@ const labels: Record<NivelAlerta, string> = {
   critica: "CRÍTICA",
 };
 
-export default function AlertBadge({
-  level,
-}: Props) {
+const tones: Record<NivelAlerta, string> = {
+  normal: colors.normal,
+  atipica: colors.atypical,
+  critica: colors.critical,
+};
+
+export default function AlertBadge({ level }: Props) {
   return (
-    <View
-      style={[
-        styles.badge,
-        styles[level],
-      ]}
-    >
-      <Text style={styles.text}>
-        {labels[level]}
-      </Text>
+    <View style={[styles.badge, { backgroundColor: `${tones[level]}20`, borderColor: `${tones[level]}80` }]}>
+      <View style={[styles.dot, { backgroundColor: tones[level] }]} />
+      <Text style={[styles.text, { color: tones[level] }]}>{labels[level]}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   badge: {
-    borderRadius: 20,
-    paddingHorizontal: 11,
-    paddingVertical: 6,
+    flexDirection: "row",
+    alignItems: "center",
     alignSelf: "flex-start",
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 9,
+    paddingVertical: 6,
+    gap: 6,
   },
-
-  normal: {
-    backgroundColor: "#2E9B62",
-  },
-
-  atipica: {
-    backgroundColor: "#D99A2B",
-  },
-
-  critica: {
-    backgroundColor: "#D64545",
-  },
-
-  text: {
-    color: "#FFFFFF",
-    fontWeight: "800",
-    fontSize: 11,
-    letterSpacing: 0.4,
-  },
+  dot: { width: 6, height: 6, borderRadius: 3 },
+  text: { fontSize: 10, fontWeight: "800", letterSpacing: 0.8 },
 });

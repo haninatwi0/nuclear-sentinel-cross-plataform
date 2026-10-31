@@ -1,78 +1,32 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TextInputProps,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TextInput, TextInputProps, View } from "react-native";
+import { colors } from "../theme";
 
-type Props = TextInputProps & {
-  label: string;
-  error?: string;
-};
+type Props = TextInputProps & { label: string; error?: string };
 
-export default function Input({
-  label,
-  error,
-  ...props
-}: Props) {
+export default function Input({ label, error, ...props }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>
-        {label}
-      </Text>
-
+      <Text style={styles.label}>{label}</Text>
       <TextInput
         {...props}
-        style={[
-          styles.input,
-          error
-            ? styles.inputError
-            : undefined,
-        ]}
-        placeholderTextColor="#718A99"
+        style={[styles.input, props.multiline && styles.multiline, error && styles.inputError, props.style]}
+        placeholderTextColor={colors.textMuted}
+        selectionColor={colors.primaryLight}
       />
-
-      {error ? (
-        <Text style={styles.error}>
-          {error}
-        </Text>
-      ) : null}
+      {error ? <Text style={styles.error}>{error}</Text> : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-  },
-
-  label: {
-    color: "#E6EEF2",
-    fontSize: 14,
-    fontWeight: "600",
-    marginBottom: 7,
-  },
-
+  container: { marginBottom: 17 },
+  label: { color: colors.textSecondary, fontSize: 11, fontWeight: "800", letterSpacing: 1, textTransform: "uppercase", marginBottom: 8 },
   input: {
-    backgroundColor: "#0D2A40",
-    borderWidth: 1,
-    borderColor: "#2A5068",
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    color: "#E6EEF2",
-    fontSize: 15,
+    minHeight: 49, backgroundColor: colors.input, borderWidth: 1, borderColor: colors.border,
+    borderRadius: 7, paddingHorizontal: 14, paddingVertical: 12, color: colors.text, fontSize: 14,
   },
-
-  inputError: {
-    borderColor: "#D64545",
-  },
-
-  error: {
-    color: "#D64545",
-    fontSize: 12,
-    marginTop: 5,
-  },
+  multiline: { minHeight: 116, textAlignVertical: "top" },
+  inputError: { borderColor: colors.critical },
+  error: { color: "#F08B8B", fontSize: 12, marginTop: 6 },
 });
